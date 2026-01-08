@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
-    container_name: job_portal_db
+    container_name: job_portal_db2
     environment:
       MYSQL_DATABASE: job_portal
       MYSQL_ROOT_PASSWORD: 8008
@@ -14,13 +14,13 @@ services:
 
   redis:
     image: redis:6.2-alpine
-    container_name: job_portal_redis
+    container_name: job_portal_redis2
     ports:
       - "6379:6379"
 
   app:
     build: .
-    container_name: job_portal_app
+    container_name: job_portal_app2
     ports:
       - "8000:8000"
     environment:
