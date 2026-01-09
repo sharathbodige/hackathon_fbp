@@ -1,0 +1,327 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Enterprise Design System - Professional Corporate Theme */
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary - Corporate Blue */
+    --primary: 224 76% 48%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 224 76% 40%;
+
+    /* Secondary - Professional Slate */
+    --secondary: 215 20% 95%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 215 20% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 215 20% 93%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 215 20% 90%;
+    --input: 215 20% 90%;
+    --ring: 224 76% 48%;
+
+    --radius: 0.5rem;
+
+    /* Role-specific accent colors */
+    --role-admin: 243 75% 59%;
+    --role-admin-bg: 243 75% 97%;
+    --role-manager: 160 84% 39%;
+    --role-manager-bg: 160 84% 97%;
+    --role-user: 199 89% 48%;
+    --role-user-bg: 199 89% 97%;
+
+    /* Sidebar */
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 224 76% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 47% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 47% 20%;
+    --sidebar-ring: 224 76% 48%;
+
+    /* Enterprise-specific tokens */
+    --header-height: 64px;
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 72px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(222 47% 11% / 0.1), 0 2px 4px -2px hsl(222 47% 11% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(222 47% 11% / 0.1), 0 4px 6px -4px hsl(222 47% 11% / 0.1);
+    --shadow-card: 0 1px 3px 0 hsl(222 47% 11% / 0.1), 0 1px 2px -1px hsl(222 47% 11% / 0.1);
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 224 76% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 224 76% 65%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 224 76% 55%;
+
+    --sidebar-background: 222 47% 5%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 224 76% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 47% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 47% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Enterprise Card Styles */
+  .enterprise-card {
+    @apply bg-card rounded-lg border border-border p-6;
+    box-shadow: var(--shadow-card);
+  }
+
+  .enterprise-card-hover {
+    @apply enterprise-card transition-all duration-200;
+  }
+
+  .enterprise-card-hover:hover {
+    box-shadow: var(--shadow-md);
+    @apply border-primary/20;
+  }
+
+  /* Role Badge Styles */
+  .role-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .role-badge-admin {
+    background-color: hsl(var(--role-admin-bg));
+    color: hsl(var(--role-admin));
+  }
+
+  .role-badge-manager {
+    background-color: hsl(var(--role-manager-bg));
+    color: hsl(var(--role-manager));
+  }
+
+  .role-badge-user {
+    background-color: hsl(var(--role-user-bg));
+    color: hsl(var(--role-user));
+  }
+
+  /* Stat Card */
+  .stat-card {
+    @apply enterprise-card flex flex-col gap-2;
+  }
+
+  .stat-value {
+    @apply text-3xl font-bold text-foreground;
+  }
+
+  .stat-label {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .stat-change-positive {
+    @apply text-xs font-medium;
+    color: hsl(var(--success));
+  }
+
+  .stat-change-negative {
+    @apply text-xs font-medium;
+    color: hsl(var(--destructive));
+  }
+
+  /* Navigation Items */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors;
+    color: hsl(var(--sidebar-foreground) / 0.7);
+  }
+
+  .nav-item:hover {
+    background-color: hsl(var(--sidebar-accent));
+    color: hsl(var(--sidebar-foreground));
+  }
+
+  .nav-item-active {
+    @apply nav-item;
+    background-color: hsl(var(--sidebar-primary));
+    color: hsl(var(--sidebar-primary-foreground));
+  }
+
+  /* Enterprise Button Variants */
+  .btn-enterprise {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-200;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-enterprise:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary {
+    @apply btn-enterprise bg-primary text-primary-foreground;
+  }
+
+  .btn-primary:hover {
+    background-color: hsl(var(--primary-hover));
+  }
+
+  .btn-secondary {
+    @apply btn-enterprise bg-secondary text-secondary-foreground border border-border;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-accent;
+  }
+
+  /* Data Table Styles */
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table th {
+    @apply text-left font-medium text-muted-foreground px-4 py-3 border-b border-border bg-muted/50;
+  }
+
+  .data-table td {
+    @apply px-4 py-3 border-b border-border;
+  }
+
+  .data-table tr:hover td {
+    @apply bg-muted/30;
+  }
+
+  /* Form Styles */
+  .form-input {
+    @apply w-full px-3 py-2.5 rounded-lg border border-input bg-background text-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
+    @apply placeholder:text-muted-foreground;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-foreground mb-1.5;
+  }
+
+  .form-error {
+    @apply text-sm text-destructive mt-1;
+  }
+
+  /* Loading States */
+  .skeleton {
+    @apply animate-pulse bg-muted rounded;
+  }
+
+  /* Widget Container */
+  .widget {
+    @apply enterprise-card;
+  }
+
+  .widget-header {
+    @apply flex items-center justify-between mb-4;
+  }
+
+  .widget-title {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  .widget-content {
+    @apply min-h-[200px];
+  }
+}
+
+/* Custom scrollbar for enterprise feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Transitions */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
