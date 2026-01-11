@@ -1,27 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/store/hooks';
 import { selectUser } from '@/store/slices/authSlice';
 import { ChartWidget } from '@/components/dashboard/ChartWidget';
 import { StatCard } from '@/components/dashboard/StatCard';
-import { Visibility, TrendingUp, PieChart, BarChart } from '@mui/icons-material';
+import {
+  Visibility,
+  TrendingUp,
+  PieChart,
+  BarChart,
+} from '@mui/icons-material';
 
-const pageViewsData = [
-  { date: 'Week 1', views: 12400 },
-  { date: 'Week 2', views: 15600 },
-  { date: 'Week 3', views: 14200 },
-  { date: 'Week 4', views: 18900 },
-];
-
-const conversionData = [
-  { channel: 'Organic', rate: 4.2 },
-  { channel: 'Paid', rate: 3.8 },
-  { channel: 'Social', rate: 2.9 },
-  { channel: 'Email', rate: 5.1 },
-  { channel: 'Direct', rate: 6.3 },
-];
+import { getAnalytics } from '@/services/analytics.api';
 
 export const AnalyticsPage: React.FC = () => {
   const user = useAppSelector(selectUser);
+
+  const [analytics, setAnalytics] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        const data = await getAnalytics();
+        setAnalytics(data);
+      } catch (err) {
+        setError('Unable to load analytics data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnalytics();
+  }, []);
+
+  if (loading) {
+    return <div className="py-10 text-center">Loading analytics...</div>;
+  }
+
+  if (error) {
+    return <div className="py-10 text-center text-red-500">{error}</div>;
+  }
+
+  if (!analytics) return null;
+
+  const { overview, pageViewsTrend, conversionByChannel } = analytics;
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -37,27 +60,27 @@ export const AnalyticsPage: React.FC = () => {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Page Views"
-          value="61.1K"
-          change={{ value: 12.3, trend: 'up' }}
+          value={overview.pageViews.value}
+          change={overview.pageViews}
           icon={<Visibility />}
         />
         <StatCard
           title="Bounce Rate"
-          value="32.4%"
-          change={{ value: 2.1, trend: 'down' }}
+          value={overview.bounceRate.value}
+          change={overview.bounceRate}
           icon={<TrendingUp />}
           variant="success"
         />
         <StatCard
           title="Avg. Session"
-          value="4m 32s"
-          change={{ value: 8.5, trend: 'up' }}
+          value={overview.avgSession.value}
+          change={overview.avgSession}
           icon={<PieChart />}
         />
         <StatCard
           title="Conversion Rate"
-          value="4.8%"
-          change={{ value: 1.2, trend: 'up' }}
+          value={overview.conversionRate.value}
+          change={overview.conversionRate}
           icon={<BarChart />}
           variant="primary"
         />
@@ -67,14 +90,14 @@ export const AnalyticsPage: React.FC = () => {
         <ChartWidget
           title="Page Views Trend"
           type="area"
-          data={pageViewsData}
+          data={pageViewsTrend}
           dataKey="views"
           xAxisKey="date"
         />
         <ChartWidget
           title="Conversion by Channel"
           type="bar"
-          data={conversionData}
+          data={conversionByChannel}
           dataKey="rate"
           xAxisKey="channel"
           color="hsl(160, 84%, 39%)"
